@@ -32,7 +32,7 @@ export const equipmentPhotos: EquipmentPhoto[] = [
   {
     type: "Power Packs",
     src: "/equipment/power-packs.webp",
-    alt: "Blue skid-mounted diesel power pack",
+    alt: "Blue skid-mounted power pack with twin motors",
   },
   {
     type: "Offshore Containers",
