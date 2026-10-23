@@ -14,7 +14,11 @@ export const equipmentPhotos: EquipmentPhoto[] = [
     src: "/equipment/dry-containers.webp",
     alt: "Blue dry freight container with doors open",
   },
-  { type: "Reefer Containers", src: "", alt: "Refrigerated (reefer) container" },
+  {
+    type: "Reefer Containers",
+    src: "/equipment/reefer-containers.webp",
+    alt: "Refrigerated reefer container with its cooling unit and controller",
+  },
   { type: "Marine Chassis", src: "", alt: "Marine chassis" },
   { type: "IMO Tanks", src: "", alt: "IMO tank container" },
   { type: "Power Packs", src: "", alt: "Power pack generator set" },
