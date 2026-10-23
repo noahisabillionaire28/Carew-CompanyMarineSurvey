@@ -9,6 +9,8 @@ import CtaBanner from "@/components/CtaBanner";
 import { Container, SectionHeading } from "@/components/ui";
 import { FadeIn, Stagger } from "@/components/motion";
 import { services } from "@/data/services";
+import { fieldMedia } from "@/data/field";
+import { publicFileExists } from "@/lib/media";
 
 export const metadata: Metadata = {
   title: {
@@ -21,9 +23,13 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
+  const field = fieldMedia.map((m) => (publicFileExists(m.src) ? m : { ...m, src: "" }));
   return (
     <>
-      <Hero />
+      <Hero
+        hasVideo={publicFileExists("/hero.mp4")}
+        hasPoster={publicFileExists("/hero-poster.jpg")}
+      />
       <Stats />
 
       <section className="bg-white py-20 sm:py-24">
@@ -35,7 +41,7 @@ export default function HomePage() {
               subtitle="Container and intermodal equipment inspections for shipping lines, leasing companies, depots and terminals."
             />
           </FadeIn>
-          <Stagger as="ul" className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Stagger as="ul" className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {services.map((s) => (
               <ServiceCard key={s.slug} service={s} />
             ))}
@@ -44,7 +50,7 @@ export default function HomePage() {
       </section>
 
       <EquipmentChips background="babyblue-light" />
-      <FieldGrid />
+      <FieldGrid items={field} />
       <WhyCCMS />
       <CtaBanner />
     </>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { Container, SectionHeading } from "@/components/ui";
 import { FadeIn, FadeItem, Stagger } from "@/components/motion";
-import { fieldMedia, type FieldMedia } from "@/data/field";
+import type { FieldMedia } from "@/data/field";
 
 function Placeholder() {
   return (
@@ -53,8 +53,8 @@ function Slot({ item }: { item: FieldMedia }) {
   );
 }
 
-export default function FieldGrid() {
-  const items = fieldMedia.slice(0, 6);
+export default function FieldGrid({ items: all }: { items: FieldMedia[] }) {
+  const items = all.slice(0, 6);
   return (
     <section className="bg-white py-20 sm:py-24">
       <Container>

@@ -3,8 +3,16 @@
 import { useState } from "react";
 import Image from "next/image";
 
-export default function Headshot({ name, initials }: { name: string; initials: string }) {
-  const [failed, setFailed] = useState(false);
+export default function Headshot({
+  name,
+  initials,
+  hasPhoto,
+}: {
+  name: string;
+  initials: string;
+  hasPhoto: boolean;
+}) {
+  const [failed, setFailed] = useState(!hasPhoto);
 
   return (
     <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-border bg-navy shadow-lg shadow-navy/10">

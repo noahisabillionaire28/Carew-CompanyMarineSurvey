@@ -4,6 +4,7 @@ import { FadeIn } from "@/components/motion";
 import Headshot from "@/components/Headshot";
 import CtaBanner from "@/components/CtaBanner";
 import { site } from "@/data/site";
+import { publicFileExists } from "@/lib/media";
 
 export const metadata: Metadata = {
   title: "About",
@@ -22,7 +23,7 @@ export default function AboutPage() {
           <FadeIn>
             <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
               <div className="lg:col-span-5">
-                <Headshot name={site.owner} initials="SC" />
+                <Headshot name={site.owner} initials="SC" hasPhoto={publicFileExists("/stanley.jpg")} />
                 <div className="mt-5">
                   <p className="text-lg font-bold text-navy">{site.owner}</p>
                   <p className="text-sm text-muted">{site.ownerTitle}, {site.name}</p>

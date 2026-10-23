@@ -6,10 +6,16 @@ import { Button, Eyebrow } from "@/components/ui";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-export default function Hero() {
+export default function Hero({
+  hasVideo,
+  hasPoster,
+}: {
+  hasVideo: boolean;
+  hasPoster: boolean;
+}) {
   const reduce = useReducedMotion();
-  const [videoOk, setVideoOk] = useState(true);
-  const [posterOk, setPosterOk] = useState(true);
+  const [videoOk, setVideoOk] = useState(hasVideo);
+  const [posterOk, setPosterOk] = useState(hasPoster);
 
   const item = {
     hidden: { opacity: 0, y: reduce ? 0 : 20 },
