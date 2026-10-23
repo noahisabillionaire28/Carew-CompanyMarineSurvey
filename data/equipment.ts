@@ -19,7 +19,11 @@ export const equipmentPhotos: EquipmentPhoto[] = [
     src: "/equipment/reefer-containers.webp",
     alt: "Refrigerated reefer container with its cooling unit and controller",
   },
-  { type: "Marine Chassis", src: "", alt: "Marine chassis" },
+  {
+    type: "Marine Chassis",
+    src: "/equipment/marine-chassis.webp",
+    alt: "Blue tandem-axle marine container chassis",
+  },
   { type: "IMO Tanks", src: "", alt: "IMO tank container" },
   { type: "Power Packs", src: "", alt: "Power pack generator set" },
   { type: "Offshore Containers", src: "", alt: "Offshore container" },
