@@ -24,7 +24,11 @@ export const equipmentPhotos: EquipmentPhoto[] = [
     src: "/equipment/marine-chassis.webp",
     alt: "Blue tandem-axle marine container chassis",
   },
-  { type: "IMO Tanks", src: "", alt: "IMO tank container" },
+  {
+    type: "IMO Tanks",
+    src: "/equipment/imo-tanks.webp",
+    alt: "Stainless steel IMO tank container in a blue frame",
+  },
   { type: "Power Packs", src: "", alt: "Power pack generator set" },
   { type: "Offshore Containers", src: "", alt: "Offshore container" },
 ];
