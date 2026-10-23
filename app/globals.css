@@ -15,6 +15,9 @@
 }
 
 html {
+  /* Stop iOS Safari from auto-inflating text sizes */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
 }

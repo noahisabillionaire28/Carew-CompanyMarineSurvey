@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Menu, Phone, X } from "lucide-react";
+import { ArrowRight, Menu, Phone, X } from "lucide-react";
 import Logo from "./Logo";
 import { nav, site } from "@/data/site";
 
@@ -130,37 +130,54 @@ export default function Navbar() {
             <div className="border-b border-border px-4 py-5 sm:px-6">
               <Link
                 href="/contact"
-                className="inline-flex rounded-xl bg-navy px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-navy-light"
+                className="flex w-full items-center justify-center rounded-xl bg-navy px-6 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-navy-light"
               >
                 Request a Survey
               </Link>
             </div>
 
-            <nav aria-label="Mobile" className="flex-1 px-4 py-8 sm:px-6">
-              <p className="text-sm italic text-muted">Menu</p>
+            <nav aria-label="Mobile" className="flex-1 px-4 pt-8 pb-6 sm:px-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                Menu
+              </p>
               <motion.ul
-                className="mt-6 flex flex-col"
+                className="mt-4 border-t border-border"
                 initial="hidden"
                 animate="show"
                 variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}
               >
-                {nav.map((item) => (
-                  <motion.li
-                    key={item.href}
-                    variants={{
-                      hidden: { opacity: 0, y: reduce ? 0 : 12 },
-                      show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
-                    }}
-                  >
-                    <Link
-                      href={item.href}
-                      aria-current={pathname === item.href ? "page" : undefined}
-                      className="block py-4 font-heading text-4xl font-bold leading-tight tracking-tight text-navy hover:text-navy-light sm:text-5xl"
+                {nav.map((item) => {
+                  const active = pathname === item.href;
+                  return (
+                    <motion.li
+                      key={item.href}
+                      className="border-b border-border"
+                      variants={{
+                        hidden: { opacity: 0, y: reduce ? 0 : 8 },
+                        show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
+                      }}
                     >
-                      {item.label}
-                    </Link>
-                  </motion.li>
-                ))}
+                      <Link
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                        className="group flex items-center justify-between py-5 font-heading text-2xl font-semibold leading-none text-navy"
+                      >
+                        <span className="flex items-center gap-3">
+                          <span
+                            aria-hidden="true"
+                            className={`h-2 w-2 rounded-full ${active ? "bg-navy" : "bg-babyblue"}`}
+                          />
+                          {item.label}
+                        </span>
+                        <ArrowRight
+                          size={20}
+                          aria-hidden="true"
+                          className="text-muted transition-transform duration-200 group-hover:translate-x-1 group-hover:text-navy motion-reduce:transform-none"
+                        />
+                      </Link>
+                    </motion.li>
+                  );
+                })}
               </motion.ul>
             </nav>
 
