@@ -104,14 +104,14 @@ export function PageHero({
   subtitle?: string;
 }) {
   return (
-    <section className="bg-babyblue-light pt-32 pb-16 sm:pt-40 sm:pb-20">
+    <section className="bg-babyblue-light pt-28 pb-8 sm:pt-40 sm:pb-16">
       <Container>
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mt-4 max-w-3xl text-4xl font-bold leading-tight tracking-tight text-navy sm:text-5xl">
+        <h1 className="mt-3 max-w-3xl text-4xl font-bold leading-tight tracking-tight text-navy sm:text-5xl">
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-4 max-w-2xl text-lg text-muted">{subtitle}</p>
+          <p className="mt-3 max-w-2xl text-base text-muted sm:text-lg">{subtitle}</p>
         )}
       </Container>
     </section>

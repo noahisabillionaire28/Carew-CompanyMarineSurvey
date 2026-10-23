@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     url: site.url,
   },
   robots: { index: true, follow: true },
+  formatDetection: { telephone: false, email: false, address: false },
 };
 
 const jsonLd = {
