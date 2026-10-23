@@ -26,22 +26,18 @@ export default function HomePage() {
   const field = fieldMedia.map((m) => (publicFileExists(m.src) ? m : { ...m, src: "" }));
   return (
     <>
-      <Hero
-        hasVideo={publicFileExists("/hero.mp4")}
-        hasPoster={publicFileExists("/hero-poster.jpg")}
-      />
+      <Hero />
       <Stats />
 
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-12 sm:py-16 lg:py-24">
         <Container>
           <FadeIn>
             <SectionHeading
               eyebrow="Services"
-              title="Eight survey services, one independent source"
-              subtitle="Container and intermodal equipment inspections for shipping lines, leasing companies, depots and terminals."
+              title="What we survey"
             />
           </FadeIn>
-          <Stagger as="ul" className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <Stagger as="ul" className="mt-6 grid grid-cols-2 sm:mt-10 gap-3 sm:gap-4 lg:grid-cols-4">
             {services.map((s) => (
               <ServiceCard key={s.slug} service={s} />
             ))}
@@ -49,10 +45,10 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <EquipmentChips background="babyblue-light" />
+      <EquipmentChips background="babyblue-light" compact />
       <FieldGrid items={field} />
       <WhyCCMS />
-      <CtaBanner />
+      <CtaBanner compact />
     </>
   );
 }

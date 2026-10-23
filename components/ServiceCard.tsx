@@ -24,12 +24,10 @@ export default function ServiceCard({ service }: { service: Service }) {
           <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-babyblue-light text-navy transition-colors duration-300 group-hover:bg-babyblue">
             <ServiceIcon name={service.icon} size={24} />
           </span>
-          <h3 className="mt-4 text-base font-bold sm:mt-5 sm:text-lg leading-tight tracking-tight text-navy">
+          <h3 className="mt-4 flex-1 text-base font-bold leading-tight tracking-tight text-navy sm:mt-5 sm:text-lg">
             {service.title}
           </h3>
-          <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{service.short}</p>
-          <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-navy">
-            Learn more
+          <span className="mt-4 inline-flex items-center text-navy" aria-hidden="true">
             <ArrowRight
               size={16}
               aria-hidden="true"

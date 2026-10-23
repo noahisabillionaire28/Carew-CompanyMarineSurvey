@@ -5,8 +5,10 @@ import { site } from "@/data/site";
 
 export default function CtaBanner({
   title = "Need an inspection scheduled?",
+  compact = false,
 }: {
   title?: string;
+  compact?: boolean;
 }) {
   return (
     <section className="bg-navy py-10 text-white sm:py-16 lg:py-20">
@@ -17,9 +19,11 @@ export default function CtaBanner({
               <h2 className="text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
                 {title}
               </h2>
-              <p className="mt-2 text-base text-babyblue sm:mt-3 sm:text-lg">
-                Tell us what you need surveyed and where. We&apos;ll follow up to confirm.
-              </p>
+              {!compact && (
+                <p className="mt-2 text-base text-babyblue sm:mt-3 sm:text-lg">
+                  Tell us what you need surveyed and where. We&apos;ll follow up to confirm.
+                </p>
+              )}
             </div>
             <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <Button href="/contact" variant="white">

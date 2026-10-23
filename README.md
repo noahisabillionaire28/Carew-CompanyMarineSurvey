@@ -21,10 +21,16 @@ All files go in the `/public` folder. The site works fine without them (it shows
 
 | File | What it's for | Notes |
 |---|---|---|
-| `/public/hero.mp4` | Home page background video | Muted, looping. Keep under ~8 MB, 1920×1080, no audio track needed. |
-| `/public/hero-poster.jpg` | Still image shown before the video loads (and on phones that block autoplay) | 1920×1080 JPG, under 300 KB. |
 | `/public/stanley.jpg` | Stanley's headshot on the About page | Portrait orientation (4:5), at least 800×1000. |
 | `/public/field/*` | "In the Field" photos/videos on the home page | JPG/PNG/WebP or MP4. |
+
+### Editing the home page video carousel
+
+The three hero videos are hosted online (not in `/public`). To change a video or its headline, edit the `slides` list at the top of `/components/home/Hero.tsx`:
+```ts
+{ video: "https://…/your-video.mp4", title: "Short Headline", subtitle: "One short line." },
+```
+Keep videos muted-friendly (no audio needed), 1080p, and under ~10 MB each so they load fast on phones. Each slide advances when its video ends.
 
 ### Editing the "In the Field" grid
 

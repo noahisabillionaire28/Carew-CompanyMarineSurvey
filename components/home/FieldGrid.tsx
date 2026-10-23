@@ -56,16 +56,15 @@ function Slot({ item }: { item: FieldMedia }) {
 export default function FieldGrid({ items: all }: { items: FieldMedia[] }) {
   const items = all.slice(0, 6);
   return (
-    <section className="bg-white py-20 sm:py-24">
+    <section className="bg-white py-12 sm:py-16 lg:py-24">
       <Container>
         <FadeIn>
           <SectionHeading
             eyebrow="In the Field"
             title="On the ground at the ports"
-            subtitle="Container and intermodal equipment inspections at the Ports of Los Angeles & Long Beach."
           />
         </FadeIn>
-        <Stagger className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Stagger className="mt-6 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-3">
           {items.map((item, i) => (
             <FadeItem key={`${item.alt}-${i}`}>
               <Slot item={item} />
