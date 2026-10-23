@@ -34,5 +34,9 @@ export const equipmentPhotos: EquipmentPhoto[] = [
     src: "/equipment/power-packs.webp",
     alt: "Blue skid-mounted diesel power pack",
   },
-  { type: "Offshore Containers", src: "", alt: "Offshore container" },
+  {
+    type: "Offshore Containers",
+    src: "/equipment/offshore-containers.webp",
+    alt: "Blue offshore container at a port terminal",
+  },
 ];
