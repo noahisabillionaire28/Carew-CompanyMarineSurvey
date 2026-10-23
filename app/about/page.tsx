@@ -18,18 +18,18 @@ export default function AboutPage() {
     <>
       <PageHero eyebrow="About" title="Independent since 1980." />
 
-      <section className="bg-white py-20 sm:py-24">
+      <section className="bg-white py-10 sm:py-16 lg:py-24">
         <Container>
           <FadeIn>
-            <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
-              <div className="lg:col-span-5">
+            <div className="grid gap-8 lg:grid-cols-12 lg:items-start lg:gap-12">
+              <div className="max-w-[240px] sm:max-w-xs lg:col-span-5 lg:max-w-none">
                 <Headshot name={site.owner} initials="SC" hasPhoto={publicFileExists("/stanley.jpg")} />
-                <div className="mt-5">
+                <div className="mt-4">
                   <p className="text-lg font-bold text-navy">{site.owner}</p>
                   <p className="text-sm text-muted">{site.ownerTitle}, {site.name}</p>
                 </div>
               </div>
-              <div className="space-y-6 text-lg leading-relaxed text-text lg:col-span-7">
+              <div className="space-y-4 text-base leading-relaxed text-text sm:space-y-6 sm:text-lg lg:col-span-7">
                 <p>
                   Stanley Carew founded Carew &amp; Company Marine Survey in February 1980.
                   For 46 years the company has provided independent surveying and inspection
@@ -53,7 +53,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-babyblue-light py-20 sm:py-24">
+      <section className="bg-babyblue-light py-10 sm:py-16 lg:py-24">
         <Container>
           <FadeIn>
             <SectionHeading
@@ -62,13 +62,14 @@ export default function AboutPage() {
               subtitle="The Ports of Los Angeles & Long Beach and the surrounding depots and terminals of Southern California."
             />
           </FadeIn>
-          <FadeIn className="mt-10">
+          <FadeIn className="mt-6 sm:mt-10">
             <div className="overflow-hidden rounded-xl border border-border bg-white shadow-sm">
               <iframe
                 title="Map of the Ports of Los Angeles and Long Beach"
                 src={site.mapEmbedUrl}
                 width="100%"
                 height="420"
+                style={{ height: "clamp(260px, 50vw, 420px)" }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 allowFullScreen

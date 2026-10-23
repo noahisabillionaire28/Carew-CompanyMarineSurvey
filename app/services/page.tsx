@@ -28,23 +28,23 @@ export default function ServicesPage() {
           <section
             key={s.slug}
             id={s.slug}
-            className={`scroll-mt-24 py-16 sm:py-20 ${alt ? "bg-babyblue-light" : "bg-white"}`}
+            className={`scroll-mt-24 py-10 sm:py-16 lg:py-20 ${alt ? "bg-babyblue-light" : "bg-white"}`}
           >
             <Container>
               <FadeIn>
-                <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+                <div className="grid gap-4 sm:gap-6 lg:grid-cols-12 lg:gap-12">
                   <div className="lg:col-span-5">
-                    <span className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-babyblue text-navy">
+                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-babyblue text-navy sm:h-14 sm:w-14">
                       <ServiceIcon name={s.icon} size={28} />
                     </span>
-                    <p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                    <p className="mt-4 text-xs font-semibold uppercase sm:mt-6 tracking-[0.14em] text-muted">
                       Service {String(i + 1).padStart(2, "0")} of {services.length}
                     </p>
-                    <h2 className="mt-2 text-3xl font-bold leading-tight tracking-tight text-navy sm:text-4xl">
+                    <h2 className="mt-1 text-2xl font-bold leading-tight tracking-tight text-navy sm:mt-2 sm:text-4xl">
                       {s.title}
                     </h2>
                   </div>
-                  <div className="space-y-4 text-lg leading-relaxed text-text lg:col-span-7">
+                  <div className="space-y-3 text-base leading-relaxed text-text sm:space-y-4 sm:text-lg lg:col-span-7">
                     {s.long.map((p) => (
                       <p key={p}>{p}</p>
                     ))}

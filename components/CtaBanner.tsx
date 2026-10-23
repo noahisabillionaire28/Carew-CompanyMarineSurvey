@@ -9,15 +9,15 @@ export default function CtaBanner({
   title?: string;
 }) {
   return (
-    <section className="bg-navy py-16 text-white sm:py-20">
+    <section className="bg-navy py-10 text-white sm:py-16 lg:py-20">
       <Container>
         <FadeIn>
-          <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+          <div className="flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center lg:gap-8">
             <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+              <h2 className="text-2xl font-bold leading-tight tracking-tight sm:text-4xl">
                 {title}
               </h2>
-              <p className="mt-3 text-lg text-babyblue">
+              <p className="mt-2 text-base text-babyblue sm:mt-3 sm:text-lg">
                 Tell us what you need surveyed and where. We&apos;ll follow up to confirm.
               </p>
             </div>
