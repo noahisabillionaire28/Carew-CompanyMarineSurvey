@@ -50,14 +50,14 @@ export function SectionHeading({
     <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
       <Eyebrow light={light}>{eyebrow}</Eyebrow>
       <h2
-        className={`mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl ${
+        className={`mt-3 text-2xl font-bold leading-tight tracking-tight sm:mt-4 sm:text-4xl ${
           light ? "text-white" : "text-navy"
         }`}
       >
         {title}
       </h2>
       {subtitle && (
-        <p className={`mt-4 text-lg ${light ? "text-babyblue" : "text-muted"}`}>
+        <p className={`mt-3 text-base sm:mt-4 sm:text-lg ${light ? "text-babyblue" : "text-muted"}`}>
           {subtitle}
         </p>
       )}

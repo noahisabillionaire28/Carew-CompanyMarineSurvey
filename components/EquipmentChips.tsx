@@ -12,7 +12,7 @@ export default function EquipmentChips({
 }) {
   return (
     <section
-      className={`py-20 sm:py-24 ${
+      className={`py-10 sm:py-16 lg:py-24 ${
         background === "white" ? "bg-white" : "bg-babyblue-light"
       }`}
     >
@@ -26,7 +26,7 @@ export default function EquipmentChips({
         </FadeIn>
         <Stagger
           as="ul"
-          className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6"
+          className="mt-6 grid grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-3 lg:grid-cols-6"
         >
           {equipmentTypes.map((type, i) => {
             const Icon = icons[i];
