@@ -23,7 +23,7 @@ function Slot({ item }: { item: FieldMedia }) {
   const empty = !item.src || failed;
 
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-babyblue-light shadow-sm">
+    <div className="relative h-full overflow-hidden rounded-xl border border-border bg-babyblue-light shadow-sm">
       {empty ? (
         <Placeholder />
       ) : item.type === "video" ? (
@@ -44,7 +44,7 @@ function Slot({ item }: { item: FieldMedia }) {
           src={item.src}
           alt={item.alt}
           fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+          sizes="(min-width: 1024px) 400px, 50vw"
           className="object-cover"
           onError={() => setFailed(true)}
         />
@@ -53,8 +53,7 @@ function Slot({ item }: { item: FieldMedia }) {
   );
 }
 
-export default function FieldGrid({ items: all }: { items: FieldMedia[] }) {
-  const items = all.slice(0, 6);
+export default function FieldGrid({ items }: { items: FieldMedia[] }) {
   return (
     <section className="bg-white py-12 sm:py-16 lg:py-24">
       <Container>
@@ -64,13 +63,20 @@ export default function FieldGrid({ items: all }: { items: FieldMedia[] }) {
             title="On the ground at the ports"
           />
         </FadeIn>
-        <Stagger className="mt-6 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4 lg:grid-cols-3">
-          {items.map((item, i) => (
-            <FadeItem key={`${item.alt}-${i}`}>
-              <Slot item={item} />
-            </FadeItem>
-          ))}
-        </Stagger>
+        {/* Rows are sized from the column width, so every landscape tile is
+            exactly 4:3 and portrait tiles span two rows. */}
+        <div className="field-wrap mt-6 sm:mt-10">
+          <Stagger className="field-grid">
+            {items.map((item, i) => (
+              <FadeItem
+                key={`${item.alt}-${i}`}
+                className={item.shape === "portrait" ? "row-span-2" : undefined}
+              >
+                <Slot item={item} />
+              </FadeItem>
+            ))}
+          </Stagger>
+        </div>
       </Container>
     </section>
   );
