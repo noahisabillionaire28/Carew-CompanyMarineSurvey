@@ -28,6 +28,19 @@ export default function Navbar() {
     setOpen(false);
   }, [pathname]);
 
+  // Lock page scroll and close on Escape while the full-screen menu is open.
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
   const linkColor = overHero
     ? "text-white/90 hover:text-white"
     : "text-text hover:text-navy";
@@ -37,7 +50,9 @@ export default function Navbar() {
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
         overHero
           ? "bg-transparent"
-          : "border-b border-border bg-white/95 backdrop-blur"
+          : open
+            ? "border-b border-border bg-white"
+            : "border-b border-border bg-white/95 backdrop-blur"
       }`}
     >
       <nav
@@ -103,42 +118,62 @@ export default function Navbar() {
         {open && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, y: reduce ? 0 : -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: reduce ? 0 : -8 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="border-t border-border bg-white lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed inset-0 top-20 z-40 flex flex-col overflow-y-auto bg-white lg:hidden"
           >
-            <ul className="flex flex-col px-4 py-4 sm:px-6">
-              {nav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={pathname === item.href ? "page" : undefined}
-                    className="block rounded-xl px-3 py-3 text-base font-medium text-text hover:bg-babyblue-light"
+            <div className="border-b border-border px-4 py-5 sm:px-6">
+              <Link
+                href="/contact"
+                className="inline-flex rounded-xl bg-navy px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-navy-light"
+              >
+                Request a Survey
+              </Link>
+            </div>
+
+            <nav aria-label="Mobile" className="flex-1 px-4 py-8 sm:px-6">
+              <p className="text-sm italic text-muted">Menu</p>
+              <motion.ul
+                className="mt-6 flex flex-col"
+                initial="hidden"
+                animate="show"
+                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}
+              >
+                {nav.map((item) => (
+                  <motion.li
+                    key={item.href}
+                    variants={{
+                      hidden: { opacity: 0, y: reduce ? 0 : 12 },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+                    }}
                   >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-              <li className="mt-2 border-t border-border pt-4">
-                <a
-                  href={site.phoneHref}
-                  className="flex items-center gap-2 px-3 py-2 text-base font-semibold text-navy"
-                >
-                  <Phone size={18} aria-hidden="true" />
-                  {site.phone}
-                </a>
-              </li>
-              <li className="mt-2">
-                <Link
-                  href="/contact"
-                  className="block rounded-xl bg-navy px-5 py-3 text-center text-base font-semibold text-white"
-                >
-                  Request a Survey
-                </Link>
-              </li>
-            </ul>
+                    <Link
+                      href={item.href}
+                      aria-current={pathname === item.href ? "page" : undefined}
+                      className="block py-4 font-heading text-4xl font-bold leading-tight tracking-tight text-navy hover:text-navy-light sm:text-5xl"
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.li>
+                ))}
+              </motion.ul>
+            </nav>
+
+            <div className="border-t border-border px-4 py-6 sm:px-6">
+              <a
+                href={site.phoneHref}
+                className="inline-flex items-center gap-2 text-lg font-semibold text-navy"
+              >
+                <Phone size={20} aria-hidden="true" />
+                {site.phone}
+              </a>
+              <p className="mt-1 text-sm text-muted">{site.hours}</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
