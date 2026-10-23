@@ -26,7 +26,11 @@ export const fieldMedia: FieldMedia[] = [
     type: "image",
     shape: "landscape",
   },
-  { src: "", alt: "Reefer container survey", type: "image" },
-  { src: "", alt: "Marine chassis inspection", type: "image" },
+  {
+    src: "/field/deck-crew-at-sea.webp",
+    alt: "Crew in safety gear on a ship's bow deck at sea",
+    type: "image",
+    shape: "portrait",
+  },
   { src: "", alt: "Container stacks at the Port of Long Beach", type: "image" },
 ];
