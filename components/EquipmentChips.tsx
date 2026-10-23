@@ -7,8 +7,10 @@ const icons = [ContainerIcon, Snowflake, Truck, Cylinder, Zap, Anchor];
 
 export default function EquipmentChips({
   background = "white",
+  compact = false,
 }: {
   background?: "white" | "babyblue-light";
+  compact?: boolean;
 }) {
   return (
     <section
@@ -21,7 +23,7 @@ export default function EquipmentChips({
           <SectionHeading
             eyebrow="Equipment"
             title="Equipment types we survey"
-            subtitle="Six categories of freight containers and intermodal equipment, inspected at the Ports of Los Angeles & Long Beach."
+            subtitle={compact ? undefined : "Six categories of freight containers and intermodal equipment, inspected at the Ports of Los Angeles & Long Beach."}
           />
         </FadeIn>
         <Stagger

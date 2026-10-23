@@ -6,31 +6,31 @@ const reasons = [
   {
     icon: Scale,
     title: "Independent",
-    body: "Third-party inspection with no conflict of interest. Our only job is to report the condition of the equipment accurately.",
+    body: "Third-party. No conflict of interest.",
   },
   {
     icon: Anchor,
     title: "Port-Based",
-    body: "On the ground at the Ports of Los Angeles & Long Beach, where the equipment is.",
+    body: "On the ground at LA & Long Beach.",
   },
   {
     icon: CalendarCheck,
     title: "Since 1980",
-    body: "46 years of container and intermodal equipment inspection experience in Southern California.",
+    body: "46 years of inspection experience.",
   },
 ];
 
 export default function WhyCCMS() {
   return (
-    <section className="bg-babyblue-light py-20 sm:py-24">
+    <section className="bg-babyblue-light py-12 sm:py-16 lg:py-24">
       <Container>
         <FadeIn>
           <SectionHeading
             eyebrow="Why CCMS"
-            title="Independent, local, experienced."
+            title="Independent. Local. Proven."
           />
         </FadeIn>
-        <Stagger className="mt-12 grid gap-8 md:grid-cols-3">
+        <Stagger className="mt-6 grid gap-6 sm:mt-10 sm:gap-8 md:grid-cols-3">
           {reasons.map((r) => {
             const Icon = r.icon;
             return (
