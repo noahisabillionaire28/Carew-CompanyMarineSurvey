@@ -20,7 +20,12 @@ export const fieldMedia: FieldMedia[] = [
     type: "image",
     shape: "portrait",
   },
-  { src: "", alt: "Container inspection at the Port of Los Angeles", type: "image" },
+  {
+    src: "/field/deck-chain-work.webp",
+    alt: "Crew member in a hard hat working with heavy chain on deck",
+    type: "image",
+    shape: "landscape",
+  },
   { src: "", alt: "Reefer container survey", type: "image" },
   { src: "", alt: "Marine chassis inspection", type: "image" },
   { src: "", alt: "Container stacks at the Port of Long Beach", type: "image" },
