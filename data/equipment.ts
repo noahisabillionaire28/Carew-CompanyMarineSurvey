@@ -29,6 +29,10 @@ export const equipmentPhotos: EquipmentPhoto[] = [
     src: "/equipment/imo-tanks.webp",
     alt: "Stainless steel IMO tank container in a blue frame",
   },
-  { type: "Power Packs", src: "", alt: "Power pack generator set" },
+  {
+    type: "Power Packs",
+    src: "/equipment/power-packs.webp",
+    alt: "Blue skid-mounted diesel power pack",
+  },
   { type: "Offshore Containers", src: "", alt: "Offshore container" },
 ];
