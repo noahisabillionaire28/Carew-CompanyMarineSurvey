@@ -132,12 +132,6 @@ export default function Hero() {
           >
             Request a Survey
           </Link>
-          <Link
-            href="/services"
-            className="inline-flex items-center justify-center rounded-full border border-white/60 px-5 py-3 text-[15px] font-semibold text-white transition-all duration-200 hover:scale-[1.03] hover:bg-white/10 active:scale-[0.98] motion-reduce:transform-none sm:px-10 sm:py-4 sm:text-lg"
-          >
-            View Services
-          </Link>
         </div>
 
         {/* Slide indicators */}
