@@ -1,7 +1,7 @@
 import { site } from "@/data/site";
 
 /** Inline LinkedIn "in" glyph (lucide-react no longer ships brand icons). */
-function LinkedinIcon({ className = "" }: { className?: string }) {
+export function LinkedinIcon({ className = "" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
