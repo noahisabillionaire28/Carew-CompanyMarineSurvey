@@ -127,16 +127,7 @@ export default function Navbar() {
             transition={{ duration: 0.2, ease: "easeOut" }}
             className="fixed inset-0 top-20 z-40 flex flex-col overflow-y-auto bg-white lg:hidden"
           >
-            <div className="border-b border-border px-4 py-5 sm:px-6">
-              <Link
-                href="/contact"
-                className="flex w-full items-center justify-center rounded-xl bg-navy px-6 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-navy-light"
-              >
-                Request a Survey
-              </Link>
-            </div>
-
-            <nav aria-label="Mobile" className="flex-1 px-4 pt-8 pb-6 sm:px-6">
+            <nav aria-label="Mobile" className="flex-1 px-4 pt-6 pb-6 sm:px-6">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
                 Menu
               </p>
@@ -179,6 +170,21 @@ export default function Navbar() {
                   );
                 })}
               </motion.ul>
+
+              {/* Primary action sits right under the links, in the natural thumb zone */}
+              <motion.div
+                initial={{ opacity: 0, y: reduce ? 0 : 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
+                className="mt-8"
+              >
+                <Link
+                  href="/contact"
+                  className="flex w-full items-center justify-center rounded-xl bg-navy px-6 py-4 text-base font-semibold text-white shadow-md shadow-navy/15 transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98] motion-reduce:transform-none"
+                >
+                  Request a Survey
+                </Link>
+              </motion.div>
             </nav>
 
             <div className="border-t border-border px-4 py-6 sm:px-6">
