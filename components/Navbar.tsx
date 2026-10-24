@@ -127,7 +127,7 @@ export default function Navbar() {
             transition={{ duration: 0.2, ease: "easeOut" }}
             className="fixed inset-0 top-20 z-40 flex flex-col overflow-y-auto bg-white lg:hidden"
           >
-            <nav aria-label="Mobile" className="flex-1 px-4 pt-6 pb-6 sm:px-6">
+            <nav aria-label="Mobile" className="flex flex-1 flex-col px-4 pt-6 pb-6 sm:px-6">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
                 Menu
               </p>
@@ -176,7 +176,7 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: reduce ? 0 : 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, ease: "easeOut", delay: 0.3 }}
-                className="mt-8"
+                className="mt-auto pt-8"
               >
                 <Link
                   href="/contact"
