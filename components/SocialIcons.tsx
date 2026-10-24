@@ -16,26 +16,33 @@ function LinkedinIcon({ className = "" }: { className?: string }) {
   );
 }
 
-/** Simple burst/asterisk shape standing in for Yelp (not the trademarked logo). */
+// Yelp-style burst: five rounded petals around a small open center.
+// Each petal is the same teardrop shape, rotated (and scaled) into place.
+const PETAL =
+  "M-1.1 -2.6 L-2.9 -8.4 Q-3 -10.6 0 -10.6 Q3 -10.6 2.9 -8.4 L1.1 -2.6 Q0 -1.7 -1.1 -2.6Z";
+const PETALS: [angle: number, scale: number][] = [
+  [-8, 1.08], // top (longest)
+  [68, 0.88], // upper right
+  [140, 0.88], // lower right
+  [208, 0.9], // bottom
+  [282, 0.88], // left
+];
+
 export function YelpIcon({ className = "" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
       width="20"
       height="20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
+      fill="currentColor"
       aria-hidden="true"
       className={className}
     >
-      <path d="M12 3v7" />
-      <path d="M12 14v7" />
-      <path d="M4.2 7.5l6 3.5" />
-      <path d="M13.8 13l6 3.5" />
-      <path d="M19.8 7.5l-6 3.5" />
-      <path d="M10.2 13l-6 3.5" />
+      <g transform="translate(12 12.8)">
+        {PETALS.map(([angle, scale]) => (
+          <path key={angle} d={PETAL} transform={`rotate(${angle}) scale(${scale})`} />
+        ))}
+      </g>
     </svg>
   );
 }
