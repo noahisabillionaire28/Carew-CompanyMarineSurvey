@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Menu, Phone, X } from "lucide-react";
 import Logo from "./Logo";
+import { LinkedinIcon, YelpIcon } from "./SocialIcons";
 import { nav, site } from "@/data/site";
 
 export default function Navbar() {
@@ -187,15 +188,26 @@ export default function Navbar() {
               </motion.div>
             </nav>
 
-            <div className="border-t border-border px-4 py-6 sm:px-6">
+            {/* Social row, like Brya's menu footer: large navy icons, evenly spaced */}
+            <div className="flex items-center justify-center gap-20 border-t border-border px-4 py-6 sm:px-6">
               <a
-                href={site.phoneHref}
-                className="inline-flex items-center gap-2 text-lg font-semibold text-navy"
+                href={site.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Stanley Carew on LinkedIn (opens in a new tab)"
+                className="text-navy transition-colors hover:text-navy-light"
               >
-                <Phone size={20} aria-hidden="true" />
-                {site.phone}
+                <LinkedinIcon className="h-9 w-9" />
               </a>
-              <p className="mt-1 text-sm text-muted">{site.hours}</p>
+              <a
+                href={site.yelp}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Carew & Company Marine Survey on Yelp (opens in a new tab)"
+                className="text-navy transition-colors hover:text-navy-light"
+              >
+                <YelpIcon className="h-9 w-9" />
+              </a>
             </div>
           </motion.div>
         )}
