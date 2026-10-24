@@ -189,7 +189,7 @@ export default function Navbar() {
             </nav>
 
             {/* Social row, like Brya's menu footer: large navy icons, evenly spaced */}
-            <div className="flex items-center justify-center gap-20 border-t border-border px-4 py-6 sm:px-6">
+            <div className="flex items-center justify-evenly border-t border-border px-4 py-6 sm:px-6">
               <a
                 href={site.linkedin}
                 target="_blank"
