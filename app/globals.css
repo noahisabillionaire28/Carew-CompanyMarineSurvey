@@ -115,3 +115,11 @@ h4 {
     animation: none;
   }
 }
+
+/* Hide scrollbars on horizontal strips (content still scrolls) */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
