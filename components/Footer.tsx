@@ -25,10 +25,7 @@ export default function Footer() {
       {/* Brand */}
       <div className={`${pad} py-6 sm:py-8`}>
         <Logo variant="light" />
-        <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
-          Independent container surveys at the Ports of Los Angeles &amp; Long Beach since
-          1980.
-        </p>
+        <p className="mt-3 text-sm leading-relaxed text-white/70">Independent since 1980.</p>
       </div>
 
       {/* Social: large, evenly spaced */}
