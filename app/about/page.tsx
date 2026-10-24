@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Container, PageHero, SectionHeading } from "@/components/ui";
 import { FadeIn } from "@/components/motion";
 import Headshot from "@/components/Headshot";
-import CtaBanner from "@/components/CtaBanner";
 import { site } from "@/data/site";
 import { publicFileExists } from "@/lib/media";
 
@@ -80,7 +79,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <CtaBanner />
     </>
   );
 }

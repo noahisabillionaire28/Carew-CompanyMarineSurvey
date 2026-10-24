@@ -23,9 +23,9 @@ export default function Footer() {
   return (
     <footer className="bg-navy text-white">
       {/* Brand */}
-      <div className={`${pad} py-8 sm:py-10`}>
+      <div className={`${pad} py-6 sm:py-8`}>
         <Logo variant="light" />
-        <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
+        <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/70">
           Independent container surveys at the Ports of Los Angeles &amp; Long Beach since
           1980.
         </p>
@@ -33,7 +33,7 @@ export default function Footer() {
 
       {/* Social: large, evenly spaced */}
       <div className={row}>
-        <div className={`${pad} flex items-center justify-center gap-16 py-7 sm:gap-24 sm:py-8`}>
+        <div className={`${pad} flex items-center justify-center gap-14 py-5 sm:gap-24 sm:py-6`}>
           <a
             href={site.linkedin}
             target="_blank"
@@ -57,11 +57,11 @@ export default function Footer() {
 
       {/* Call to action */}
       <div className={row}>
-        <div className={`${pad} flex items-center justify-center gap-4 py-6 sm:gap-6 sm:py-7`}>
+        <div className={`${pad} flex items-center justify-center gap-4 py-4 sm:gap-6 sm:py-5`}>
           <span className="text-lg font-semibold sm:text-xl">Need A Survey?</span>
           <Link
             href="/contact"
-            className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-navy shadow-sm transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98] motion-reduce:transform-none sm:px-6 sm:text-base"
+            className="rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-navy shadow-sm transition-transform duration-200 hover:scale-[1.03] active:scale-[0.98] motion-reduce:transform-none sm:px-6 sm:text-base"
           >
             Request Here
           </Link>
@@ -70,7 +70,7 @@ export default function Footer() {
 
       {/* Addresses */}
       <div className={row}>
-        <div className={`${pad} flex items-start justify-between gap-6 py-6 text-sm sm:py-7 sm:text-base`}>
+        <div className={`${pad} flex items-start justify-between gap-6 py-4 text-sm sm:py-5 sm:text-base`}>
           <address className="not-italic leading-relaxed">
             <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-babyblue">
               Office
@@ -92,7 +92,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className={row}>
-        <p className={`${pad} py-6 text-center text-sm text-white/70 sm:py-7`}>
+        <p className={`${pad} py-4 text-center text-xs text-white/60 sm:py-5 sm:text-sm`}>
           © {year} / Carew &amp; Company Marine Survey / All Rights Reserved
         </p>
       </div>
