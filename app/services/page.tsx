@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Container, PageHero } from "@/components/ui";
 import { FadeIn } from "@/components/motion";
 import EquipmentChips from "@/components/EquipmentChips";
-import CtaBanner from "@/components/CtaBanner";
 import ServiceIcon from "@/components/ServiceIcon";
 import { services } from "@/data/services";
 
@@ -57,7 +56,6 @@ export default function ServicesPage() {
       })}
 
       <EquipmentChips background="white" />
-      <CtaBanner />
     </>
   );
 }

@@ -5,7 +5,6 @@ import FieldGrid from "@/components/home/FieldGrid";
 import WhyCCMS from "@/components/home/WhyCCMS";
 import ServiceCard from "@/components/ServiceCard";
 import EquipmentChips from "@/components/EquipmentChips";
-import CtaBanner from "@/components/CtaBanner";
 import { Container, SectionHeading } from "@/components/ui";
 import { FadeIn, Stagger } from "@/components/motion";
 import { services } from "@/data/services";
@@ -48,7 +47,6 @@ export default function HomePage() {
       <EquipmentChips background="babyblue-light" compact />
       <FieldGrid items={field} />
       <WhyCCMS />
-      <CtaBanner compact />
     </>
   );
 }
