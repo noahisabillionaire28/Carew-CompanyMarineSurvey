@@ -1,48 +1,12 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
-import { requestSchema, type RequestData } from "@/lib/schema";
+import { requestSchema } from "@/lib/schema";
+import { clientEmail, internalEmail } from "@/lib/emails";
 
 export const runtime = "nodejs";
 
-const FROM = "CCMS Website <requests@ccms-survey.com>";
+const DEFAULT_FROM = "CCMS Website <requests@ccms-survey.com>";
 const DEFAULT_TO = "carew@ccms-survey.com";
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function buildHtml(data: RequestData, submittedAt: string) {
-  const rows: [string, string][] = [
-    ["Submitted At", submittedAt],
-    ["Name", data.name],
-    ["Company", data.company],
-    ["Phone", data.phone],
-    ["Email", data.email],
-    ["Service", data.service],
-    ["Equipment Type", data.equipment],
-    ["Location", data.location],
-    ["Units", data.units !== undefined ? String(data.units) : "—"],
-    ["Preferred Date", data.preferredDate || "—"],
-    ["Message", data.message || "—"],
-  ];
-
-  const tr = rows
-    .map(
-      ([k, v]) =>
-        `<tr><td style="padding:8px 12px;border:1px solid #DCE8F3;background:#E9F4FC;font-weight:600;color:#0B1F3A;white-space:nowrap">${k}</td><td style="padding:8px 12px;border:1px solid #DCE8F3;color:#1E293B">${escapeHtml(v).replace(/\n/g, "<br>")}</td></tr>`,
-    )
-    .join("");
-
-  return `<!doctype html><html><body style="font-family:Arial,Helvetica,sans-serif;color:#1E293B;line-height:1.5">
-<h2 style="color:#0B1F3A;margin:0 0 16px">New Survey Request</h2>
-<table cellspacing="0" cellpadding="0" style="border-collapse:collapse;min-width:480px">${tr}</table>
-<p style="margin-top:16px;color:#64748B;font-size:12px">Sent from the ccms-survey.com request form.</p>
-</body></html>`;
-}
 
 export async function POST(req: Request) {
   let body: unknown;
@@ -77,19 +41,39 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "Unable to send right now." }, { status: 500 });
   }
 
+  const resend = new Resend(apiKey);
+  const from = process.env.FROM_EMAIL || DEFAULT_FROM;
+  const to = process.env.NOTIFY_EMAIL || DEFAULT_TO;
+
+  // Email 1: internal notification to CCMS (required; failure = request failed)
   try {
-    const resend = new Resend(apiKey);
+    const internal = internalEmail(data, submittedAt);
     const { error } = await resend.emails.send({
-      from: FROM,
-      to: process.env.NOTIFY_EMAIL || DEFAULT_TO,
+      from,
+      to,
       replyTo: data.email,
-      subject: `New Survey Request — ${data.company} — ${data.service}`,
-      html: buildHtml(data, submittedAt),
+      subject: internal.subject,
+      html: internal.html,
     });
     if (error) throw error;
   } catch (err) {
-    console.error("Resend error", err);
+    console.error("Resend error (internal)", err);
     return NextResponse.json({ ok: false, error: "Unable to send right now." }, { status: 500 });
+  }
+
+  // Email 2: confirmation to the requester (best effort; never fails the request)
+  try {
+    const confirm = clientEmail(data, submittedAt);
+    const { error } = await resend.emails.send({
+      from,
+      to: data.email,
+      replyTo: to,
+      subject: confirm.subject,
+      html: confirm.html,
+    });
+    if (error) console.error("Resend error (confirmation)", error);
+  } catch (err) {
+    console.error("Resend error (confirmation)", err);
   }
 
   // Step 2: Google Sheets backup (non-blocking; never fails the request)
