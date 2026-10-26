@@ -51,41 +51,38 @@ export default function ServicesStrip() {
     el.scrollBy({ left: dir * step, behavior: reduce ? "auto" : "smooth" });
   };
 
+  // Desktop arrows sit on the left and right edges of the strip, vertically centred on the cards
   const btn =
-    "inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-white text-navy shadow-sm transition-all duration-200 hover:border-babyblue hover:bg-babyblue-light active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-border disabled:hover:bg-white motion-reduce:transform-none";
+    "absolute top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white text-navy shadow-lg shadow-navy/10 transition-all duration-200 hover:border-babyblue hover:bg-babyblue-light active:scale-95 disabled:cursor-not-allowed disabled:opacity-0 motion-reduce:transform-none lg:inline-flex";
 
   return (
     <section className="bg-white py-12 sm:py-16 lg:py-24">
       <Container>
         <FadeIn>
-          <div className="flex items-end justify-between gap-6">
-            <SectionHeading eyebrow="Services" title="What we survey" />
-            <div className="hidden shrink-0 items-center gap-3 lg:flex">
-              <button
-                type="button"
-                onClick={() => scrollByCard(-1)}
-                disabled={atStart}
-                aria-label="Previous services"
-                className={btn}
-              >
-                <ArrowLeft size={20} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                onClick={() => scrollByCard(1)}
-                disabled={atEnd}
-                aria-label="Next services"
-                className={btn}
-              >
-                <ArrowRight size={20} aria-hidden="true" />
-              </button>
-            </div>
-          </div>
+          <SectionHeading eyebrow="Services" title="What we survey" />
         </FadeIn>
       </Container>
 
       {/* Scroller bleeds to the viewport edge so the last visible card peeks */}
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="relative mx-auto w-full max-w-7xl">
+        <button
+          type="button"
+          onClick={() => scrollByCard(-1)}
+          disabled={atStart}
+          aria-label="Previous services"
+          className={`${btn} left-3`}
+        >
+          <ArrowLeft size={20} aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollByCard(1)}
+          disabled={atEnd}
+          aria-label="Next services"
+          className={`${btn} right-3`}
+        >
+          <ArrowRight size={20} aria-hidden="true" />
+        </button>
         <motion.ul
           ref={ref}
           aria-label="Services"
