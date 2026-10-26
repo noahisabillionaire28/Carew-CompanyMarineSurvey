@@ -51,9 +51,9 @@ export default function ServicesStrip() {
     el.scrollBy({ left: dir * step, behavior: reduce ? "auto" : "smooth" });
   };
 
-  // Desktop arrows sit on the left and right edges of the strip, vertically centred on the cards
+  // Desktop arrows live in their own gutters outside the scroller, so they never cover a card
   const btn =
-    "absolute top-1/2 z-10 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white text-navy shadow-lg shadow-navy/10 transition-all duration-200 hover:border-babyblue hover:bg-babyblue-light active:scale-95 disabled:cursor-not-allowed disabled:opacity-0 motion-reduce:transform-none lg:inline-flex";
+    "absolute top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-white text-navy shadow-sm transition-all duration-200 hover:border-babyblue hover:bg-babyblue-light active:scale-95 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-border disabled:hover:bg-white motion-reduce:transform-none lg:inline-flex";
 
   return (
     <section className="bg-white py-12 sm:py-16 lg:py-24">
@@ -64,13 +64,13 @@ export default function ServicesStrip() {
       </Container>
 
       {/* Scroller bleeds to the viewport edge so the last visible card peeks */}
-      <div className="relative mx-auto w-full max-w-7xl">
+      <div className="relative mx-auto w-full max-w-7xl lg:max-w-[88rem] lg:px-16">
         <button
           type="button"
           onClick={() => scrollByCard(-1)}
           disabled={atStart}
           aria-label="Previous services"
-          className={`${btn} left-3`}
+          className={`${btn} left-2`}
         >
           <ArrowLeft size={20} aria-hidden="true" />
         </button>
@@ -79,7 +79,7 @@ export default function ServicesStrip() {
           onClick={() => scrollByCard(1)}
           disabled={atEnd}
           aria-label="Next services"
-          className={`${btn} right-3`}
+          className={`${btn} right-2`}
         >
           <ArrowRight size={20} aria-hidden="true" />
         </button>
