@@ -31,11 +31,7 @@ export default function ContactPage() {
             {/* Form first: top of the page on mobile, left column on desktop */}
             <FadeIn className="lg:col-span-7">
               <div className="rounded-xl border border-border bg-white p-5 shadow-sm sm:p-8">
-                <h2 className="text-xl font-bold tracking-tight text-navy">Survey request</h2>
-                <p className="mt-1 text-sm text-muted">Fields marked * are required.</p>
-                <div className="mt-5 sm:mt-6">
-                  <RequestForm />
-                </div>
+                <RequestForm />
               </div>
             </FadeIn>
 
