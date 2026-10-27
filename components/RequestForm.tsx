@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Loader2, Phone } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import {
   equipmentOptions,
   locationOptions,
@@ -98,13 +98,6 @@ function SuccessState({ email }: { email: string }) {
         <span className="font-semibold text-text">{email}</span>, and we&apos;ll
         be in touch shortly.
       </p>
-      <a
-        href={site.phoneHref}
-        className="mt-6 inline-flex items-center gap-2 text-base font-semibold text-navy hover:underline"
-      >
-        <Phone size={18} aria-hidden="true" />
-        {site.phone}
-      </a>
     </motion.div>
   );
 }
