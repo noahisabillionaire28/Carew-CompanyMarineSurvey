@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import {
   equipmentOptions,
   locationOptions,
@@ -98,6 +99,24 @@ function SuccessState({ email }: { email: string }) {
         <span className="font-semibold text-text">{email}</span>, and we&apos;ll
         be in touch shortly.
       </p>
+      <motion.div
+        initial={{ opacity: 0, y: reduce ? 0 : 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease, delay: 0.7 }}
+        className="mt-8"
+      >
+        <Link
+          href="/"
+          className="group inline-flex items-center gap-2.5 rounded-xl bg-navy px-6 py-3.5 text-base font-semibold text-white shadow-sm transition-all duration-200 hover:scale-[1.02] hover:bg-navy-light active:scale-[0.98] motion-reduce:transform-none"
+        >
+          <ArrowLeft
+            size={18}
+            aria-hidden="true"
+            className="transition-transform duration-200 group-hover:-translate-x-1 motion-reduce:transform-none"
+          />
+          Back to homepage
+        </Link>
+      </motion.div>
     </motion.div>
   );
 }
