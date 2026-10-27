@@ -15,7 +15,7 @@ export const requestSchema = z.object({
     .min(7, "Please enter a valid phone number.")
     .max(30)
     .regex(/^[0-9+()\-.\s]+$/, "Please enter a valid phone number."),
-  email: z.string().trim().email("Please enter a valid email address.").max(200),
+  email: z.string().trim().toLowerCase().email("Please enter a valid email address.").max(200),
   service: z.enum(serviceTitles, { message: "Please choose a service." }),
   equipment: z.enum(equipmentOptions, { message: "Please choose an equipment type." }),
   location: z.enum(locationOptions, { message: "Please choose a location." }),
