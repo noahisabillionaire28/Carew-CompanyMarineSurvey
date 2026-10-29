@@ -31,3 +31,8 @@ export const requestSchema = z.object({
 
 export type RequestInput = z.input<typeof requestSchema>;
 export type RequestData = z.output<typeof requestSchema>;
+
+/** Same fields without the honeypot — used by the staff CRM's manual entry form. */
+export const leadInputSchema = requestSchema.omit({ website: true });
+export type LeadFormInput = z.input<typeof leadInputSchema>;
+export type LeadFormData = z.output<typeof leadInputSchema>;

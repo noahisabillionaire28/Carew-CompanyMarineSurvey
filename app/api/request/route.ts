@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { requestSchema } from "@/lib/schema";
 import { clientEmail, internalEmail } from "@/lib/emails";
+import { createLead } from "@/lib/crm/store";
 
 export const runtime = "nodejs";
 
@@ -34,10 +35,21 @@ export async function POST(req: Request) {
     timeStyle: "short",
   }).format(new Date());
 
-  // Step 1: email via Resend (primary)
+  // Step 1: save the lead for the staff CRM. This is the source of truth; if it
+  // fails we still send the emails so the request reaches CCMS either way.
+  let saved = false;
+  try {
+    await createLead(data, "website", { name: "website" });
+    saved = true;
+  } catch (err) {
+    console.error("Lead storage error", err);
+  }
+
+  // Step 2: email via Resend
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error("RESEND_API_KEY is not set");
+    if (saved) return NextResponse.json({ ok: true });
     return NextResponse.json({ ok: false, error: "Unable to send right now." }, { status: 500 });
   }
 
@@ -45,7 +57,7 @@ export async function POST(req: Request) {
   const from = process.env.FROM_EMAIL || DEFAULT_FROM;
   const to = process.env.NOTIFY_EMAIL || DEFAULT_TO;
 
-  // Email 1: internal notification to CCMS (required; failure = request failed)
+  // Email 1: internal notification to CCMS
   try {
     const internal = internalEmail(data, submittedAt);
     const { error } = await resend.emails.send({
@@ -58,7 +70,10 @@ export async function POST(req: Request) {
     if (error) throw error;
   } catch (err) {
     console.error("Resend error (internal)", err);
-    return NextResponse.json({ ok: false, error: "Unable to send right now." }, { status: 500 });
+    // Only fail the request when the lead was not saved anywhere.
+    if (!saved) {
+      return NextResponse.json({ ok: false, error: "Unable to send right now." }, { status: 500 });
+    }
   }
 
   // Email 2: confirmation to the requester (best effort; never fails the request)

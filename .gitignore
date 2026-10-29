@@ -37,6 +37,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# staff CRM local storage (used when BLOB_READ_WRITE_TOKEN is not set)
+.crm-data/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

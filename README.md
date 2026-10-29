@@ -119,13 +119,43 @@ If the sheet is ever unreachable, the email still sends — the sheet is only a 
 
 ---
 
+## h. Staff CRM (`/admin`)
+
+Stanley and his staff log in at **https://ccms-survey.com/admin** (there is also a small "Staff login" link in the footer). Every website request lands there automatically. Staff can search and filter leads, move them through **New → Contacted → Scheduled → Completed → Lost** (list or board view), add notes, log phone-call leads by hand, export everything to CSV, and see stats. The CRM never sends email.
+
+### One-time setup
+
+1. **Lead storage (Vercel Blob, private).** In Vercel open the project → **Storage** → **Create Database** → **Blob**. Name it `ccms-leads`, set access to **Private**, and connect it to the project for all environments. Vercel adds `BLOB_READ_WRITE_TOKEN` automatically. Until this exists, the admin pages show a warning and leads are not saved on production.
+2. **Session secret.** Make one and add it as `SESSION_SECRET` in Vercel:
+   ```
+   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+   ```
+3. **Staff accounts.** For each person run:
+   ```
+   node scripts/staff-user.mjs "Stanley Carew" stanley "their-password"
+   ```
+   Put the printed objects into a JSON array and save it as `STAFF_USERS` in Vercel, e.g. `[{...},{...},{...}]`.
+4. **Redeploy** (Deployments → ⋯ → Redeploy) so the new variables are picked up.
+
+### Everyday admin
+
+- **Change a password:** run the script again for that person, replace their entry in `STAFF_USERS`, redeploy.
+- **Remove someone:** delete their entry from `STAFF_USERS`, redeploy. They are logged out immediately.
+- **Log everyone out:** change `SESSION_SECRET`.
+- **Where the data lives:** one JSON file per lead in the private Blob store (`leads/<id>.json`). It is never reachable by URL. Export a CSV from the Leads page any time.
+- **Running locally:** leave `BLOB_READ_WRITE_TOKEN` empty and leads are stored in `.crm-data/` on your machine.
+
+---
+
 ## Project layout
 
 ```
-app/            pages, layout, API route, sitemap, robots, icons
-components/     Navbar, Footer, Logo, form, sections
+app/            public pages under (site)/, staff CRM under admin/, API routes, sitemap, robots, icons
+components/     Navbar, Footer, Logo, form, sections; admin/ holds the CRM UI
 data/           site.ts (contact facts), services.ts (8 services), field.ts (media grid)
 lib/schema.ts   form validation (shared by browser and server)
-scripts/        google-apps-script.gs
+lib/crm/        CRM: config.ts (statuses), auth, session, store/ (blob + local), stats, csv
+middleware.ts   protects /admin and /api/admin
+scripts/        google-apps-script.gs, staff-user.mjs
 public/         media files you add
 ```
