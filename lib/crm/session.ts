@@ -12,6 +12,8 @@ export interface Session {
   n: string;
   /** expiry, unix seconds */
   exp: number;
+  /** fingerprint of the password hash the session was created with */
+  v?: string;
 }
 
 const enc = new TextEncoder();
@@ -72,7 +74,7 @@ export async function verifySession(
     const s = JSON.parse(dec.decode(fromB64url(payload))) as Partial<Session>;
     if (typeof s.u !== "string" || typeof s.n !== "string" || typeof s.exp !== "number") return null;
     if (s.exp <= nowSeconds) return null;
-    return { u: s.u, n: s.n, exp: s.exp };
+    return { u: s.u, n: s.n, exp: s.exp, v: typeof s.v === "string" ? s.v : undefined };
   } catch {
     return null;
   }

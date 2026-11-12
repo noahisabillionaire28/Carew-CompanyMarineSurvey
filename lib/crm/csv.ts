@@ -28,8 +28,13 @@ export const CSV_COLUMNS: { header: string; value: (l: Lead) => string }[] = [
 
 function cell(raw: string): string {
   let v = raw ?? "";
-  // Stop spreadsheet apps from treating a cell as a formula.
-  if (/^[=+\-@\t\r]/.test(v)) v = `'${v}`;
+  if (/^[+-]/.test(v) && /^[0-9+()\-.\s]+$/.test(v)) {
+    // Phone-like values such as +1 (310) 555-0100: show as text, never as arithmetic.
+    v = `="${v}"`;
+  } else if (/^[=+\-@\t\r]/.test(v)) {
+    // Stop spreadsheet apps from treating a cell as a formula.
+    v = `'${v}`;
+  }
   if (/[",\r\n]/.test(v)) v = `"${v.replace(/"/g, '""')}"`;
   return v;
 }

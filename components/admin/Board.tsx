@@ -90,7 +90,7 @@ export default function Board({ rows }: { rows: LeadRow[] }) {
                         value={statusOf(r)}
                         disabled={pending === r.id}
                         onChange={(e) => move(r.id, e.target.value as LeadStatus)}
-                        className="w-full rounded-lg border border-border bg-white px-2 py-1.5 text-xs font-medium text-navy focus:border-babyblue focus:outline-none focus:ring-2 focus:ring-babyblue disabled:opacity-60"
+                        className="w-full rounded-lg border border-border bg-white px-2 py-2.5 text-base font-medium text-navy focus:border-babyblue focus:outline-none focus:ring-2 focus:ring-babyblue disabled:opacity-60 sm:py-1.5 sm:text-xs"
                       >
                         {STATUSES.map((o) => (
                           <option key={o.value} value={o.value}>

@@ -2,12 +2,12 @@
  * Staff accounts and sessions. Node runtime only (uses node:crypto and next/headers).
  *
  * STAFF_USERS   JSON array of { name, username, hash } — generate entries with
- *               node scripts/staff-user.mjs "Full Name" username "password"
+ *               node scripts/staff-user.mjs "Full Name" username   (password is prompted)
  * SESSION_SECRET  32+ random bytes as hex — signs the session cookie
  */
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
+import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { SESSION_COOKIE, SESSION_DAYS } from "./config";
 import { signSession, verifySession } from "./session";
 import type { Staff } from "./types";
@@ -15,6 +15,9 @@ import type { Staff } from "./types";
 export interface StaffUser extends Staff {
   hash: string;
 }
+
+/** Exact shape produced by hashPassword / scripts/staff-user.mjs. Anything else is rejected. */
+const HASH_RE = /^scrypt\$[0-9a-f]{32}\$[0-9a-f]{128}$/i;
 
 // Used when the username doesn't exist so the timing matches a real check.
 const DUMMY_HASH = `scrypt$${"0".repeat(32)}$${"0".repeat(128)}`;
@@ -25,12 +28,14 @@ export function hashPassword(password: string): string {
   return `scrypt$${salt}$${key}`;
 }
 
+/** Fails closed: a malformed stored hash can never match. */
 export function verifyPassword(password: string, stored: string): boolean {
-  const [algo, salt, key] = stored.split("$");
-  if (algo !== "scrypt" || !salt || !key) return false;
+  if (!HASH_RE.test(stored)) return false;
+  const [, salt, key] = stored.split("$");
   const expected = Buffer.from(key, "hex");
-  const actual = scryptSync(password, salt, expected.length);
-  return expected.length === actual.length && timingSafeEqual(expected, actual);
+  if (expected.length !== 64) return false;
+  const actual = scryptSync(password, salt, 64);
+  return timingSafeEqual(expected, actual);
 }
 
 export function getStaffUsers(): StaffUser[] {
@@ -39,17 +44,32 @@ export function getStaffUsers(): StaffUser[] {
   try {
     const parsed: unknown = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(
-      (u): u is StaffUser =>
-        typeof u === "object" &&
-        u !== null &&
-        typeof (u as StaffUser).username === "string" &&
-        typeof (u as StaffUser).name === "string" &&
-        typeof (u as StaffUser).hash === "string",
-    );
+    const users: StaffUser[] = [];
+    for (const u of parsed) {
+      if (
+        typeof u !== "object" ||
+        u === null ||
+        typeof (u as StaffUser).username !== "string" ||
+        typeof (u as StaffUser).name !== "string" ||
+        typeof (u as StaffUser).hash !== "string"
+      ) {
+        continue;
+      }
+      if (!HASH_RE.test((u as StaffUser).hash)) {
+        console.warn(`STAFF_USERS: ignoring "${(u as StaffUser).username}" (bad hash format)`);
+        continue;
+      }
+      users.push(u as StaffUser);
+    }
+    return users;
   } catch {
     return [];
   }
+}
+
+/** Short fingerprint of a user's current password hash; baked into their session. */
+function credentialTag(hash: string): string {
+  return createHash("sha256").update(hash).digest("hex").slice(0, 16);
 }
 
 export function sessionSecret(): string {
@@ -71,7 +91,11 @@ export function authenticate(username: string, password: string): Staff | null {
 
 export async function createSessionToken(staff: Staff): Promise<string> {
   const exp = Math.floor(Date.now() / 1000) + SESSION_DAYS * 86400;
-  return signSession({ u: staff.username, n: staff.name, exp }, sessionSecret());
+  const user = getStaffUsers().find((u) => u.username === staff.username);
+  return signSession(
+    { u: staff.username, n: staff.name, exp, v: credentialTag(user?.hash ?? "") },
+    sessionSecret(),
+  );
 }
 
 export function sessionCookieOptions(secure: boolean) {
@@ -97,9 +121,10 @@ export async function getStaff(): Promise<Staff | null> {
   const token = jar.get(SESSION_COOKIE)?.value;
   const session = await verifySession(token, sessionSecret());
   if (!session) return null;
-  // Accounts removed from STAFF_USERS lose access immediately.
+  // Accounts removed from STAFF_USERS lose access immediately, and a changed
+  // password (new hash → new tag) signs that person out everywhere.
   const user = getStaffUsers().find((u) => u.username === session.u);
-  if (!user) return null;
+  if (!user || session.v !== credentialTag(user.hash)) return null;
   return { username: user.username, name: user.name };
 }
 

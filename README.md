@@ -132,17 +132,18 @@ Stanley and his staff log in at **https://ccms-survey.com/admin** (there is also
    ```
 3. **Staff accounts.** For each person run:
    ```
-   node scripts/staff-user.mjs "Stanley Carew" stanley "their-password"
+   node scripts/staff-user.mjs "Stanley Carew" stanley
    ```
-   Put the printed objects into a JSON array and save it as `STAFF_USERS` in Vercel, e.g. `[{...},{...},{...}]`.
+   It asks for the password (nothing is shown while you type, and it never lands in your shell history). Put the printed objects into a JSON array and save it as `STAFF_USERS` in Vercel, e.g. `[{...},{...},{...}]`.
 4. **Redeploy** (Deployments → ⋯ → Redeploy) so the new variables are picked up.
 
 ### Everyday admin
 
-- **Change a password:** run the script again for that person, replace their entry in `STAFF_USERS`, redeploy.
+- **Change a password:** run the script again for that person, replace their entry in `STAFF_USERS`, redeploy. That person is signed out everywhere (including a lost phone) and signs back in with the new password.
+- **Too many wrong passwords:** after 10 failed attempts from one network (or 30 against one username) in 15 minutes, logins from there are blocked for the rest of that window.
 - **Remove someone:** delete their entry from `STAFF_USERS`, redeploy. They are logged out immediately.
 - **Log everyone out:** change `SESSION_SECRET`.
-- **Where the data lives:** one JSON file per lead in the private Blob store (`leads/<id>.json`). It is never reachable by URL. Export a CSV from the Leads page any time.
+- **Where the data lives:** one JSON file per lead in the private Blob store (`leads/<id>.json`), plus `leads/index.json`, a cached summary that rebuilds itself. Nothing is reachable by URL. Export a CSV from the Leads page any time.
 - **Running locally:** leave `BLOB_READ_WRITE_TOKEN` empty and leads are stored in `.crm-data/` on your machine.
 
 ---
