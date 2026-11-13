@@ -91,6 +91,12 @@ export default function Footer() {
       <div className={row}>
         <p className={`${pad} py-4 text-center text-xs text-white/60 sm:py-5 sm:text-sm`}>
           © {year} / Carew &amp; Company Marine Survey / All Rights Reserved
+          <Link
+            href="/admin"
+            className="ml-3 whitespace-nowrap text-white/40 underline-offset-4 transition-colors hover:text-white/80 hover:underline"
+          >
+            Staff login
+          </Link>
         </p>
       </div>
     </footer>
